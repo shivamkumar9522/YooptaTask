@@ -8,14 +8,18 @@ const Edit = () => {
   const [data, setData] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
+  const stripHTML = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
   useEffect(() => {
     fetch(`https://66daa02cf47a05d55be5585f.mockapi.io/user/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setData(data);
         setTitle(data.title);
-        setDescription(data.description);
+        setDescription(stripHTML(data.description));
         console.log(data, "dta----------");
       })
       .catch((error) => {
